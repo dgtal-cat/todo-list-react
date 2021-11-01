@@ -4,31 +4,18 @@ import "./task.css"
 
 export default class Task extends Component {
 
-   state = {
-      description: "",
-      created: "",
-      important: false,
-      completed: false,
-      editing: false
-   }
-
-   onClick = () => {
-
-   }
-
    render() {
-      const {description, created, important = false, completed = false, editing = false} = this.props
-
+      const {id, description, created, onDelete, onDone, done} = this.props
       return (
-         <div className="view">
-            <input className="toggle" type="checkbox" onClick={this.onClick} />
-            <label>
-               <span className="description">{description}</span>
-               <span className="created">{created}</span>
-            </label>
-            <button className="icon icon-edit"/>
-            <button className="icon icon-destroy"/>
-         </div>
+            <div className="view">
+               <input id={id} className="toggle" type="checkbox" onClick={onDone} defaultChecked={done}/>
+               <label htmlFor={id}>
+                  <span className="description">{description}</span>
+                  <span className="created">{created}</span>
+               </label>
+               <button className="icon icon-edit"/>
+               <button className="icon icon-destroy" onClick={onDelete}/>
+            </div>
       )
    }
 }

@@ -1,41 +1,32 @@
-import React from "react";
-
+import React, {Component} from "react";
 import Task from "./task";
-
 import "./task-list.css"
 
-const TaskList = ({ tasks }) => {
-   const elements = tasks.map((item) => {
-      const {id, ...taskProps} = item;
-      let elementStyle = ""
+export default class TaskList extends Component {
 
-      if (item.editing) { //временное условие для проверки отображения стиля для редактируемой задачи
-         elementStyle = "editing"
+   render() {
+      const {todos, onDelete, onDone} = this.props;
+      const elements = todos.map((item) => {
+         const {id, done, ...taskProps} = item;
+         let styleClass = ""
+         if (done) {
+            styleClass = "completed"
+         }
          return (
-            <li key={id} className={elementStyle}>
-               <Task {...taskProps} />
-               <input type="text" className="edit"/>
+            <li key={id} className={styleClass}>
+               <Task {...taskProps}
+                     id={id}
+                     done={done}
+                     onDelete={() => onDelete(id)}
+                     onDone={() => onDone(id)}
+               />
             </li>
          )
-      } else if (item.completed) {
-         elementStyle = "completed"
-         return (
-            <li key={id} className={elementStyle}>
-               <Task {...taskProps} />
-            </li>
-         )
-      } else return (
-         <li key={id} className={elementStyle}>
-            <Task {...taskProps} />
-         </li>
+      })
+      return (
+         <ul className="todo-list">
+            {elements}
+         </ul>
       )
-   })
-
-   return (
-      <ul className="todo-list">
-         {elements}
-      </ul>
-   )
+   }
 }
-
-export default TaskList
