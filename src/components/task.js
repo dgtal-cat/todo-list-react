@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import { formatDistanceToNow } from 'date-fns'
 
 import "./task.css"
 
@@ -16,7 +17,7 @@ export default class Task extends Component {
                   defaultChecked={done}/>
                <label htmlFor={id}>
                   <span className="label">{label}</span>
-                  <span className="created">{created}</span>
+                  <span className="created">{formatDistanceToNow(created)}</span>
                </label>
                <button className="icon icon-edit"/>
                <button className="icon icon-destroy" onClick={onDelete}/>

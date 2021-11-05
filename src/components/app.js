@@ -23,13 +23,16 @@ export default class App extends Component {
       return {
          id: this.idGenerator(),
          label,
-         created: Date.now().toLocaleString(),
+         created: Date.now(),
          done: false
       }
    }
 
    addTask = (text) => {
       const newItem = this.createTask(text)
+
+      console.log("New task created:")
+      console.log(newItem)
 
       this.setState(({todos}) => {
          const newArr = [
@@ -52,6 +55,8 @@ export default class App extends Component {
             ...todos.slice(index + 1)
          ]
 
+         console.log(`Task with id ${id} was deleted`)
+
          return {
             todos: newTodos
          }
@@ -63,10 +68,10 @@ export default class App extends Component {
          const newTodos = todos.map((item) => {
             if (item.id === id) {
                item.done = !item.done
+               console.log(`Task with id ${id}: done status is ${item.done}`)
             }
             return item
          })
-
          return {
             todos: newTodos
          }
