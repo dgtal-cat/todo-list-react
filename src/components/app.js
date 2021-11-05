@@ -7,12 +7,40 @@ import Footer from "./footer";
 import "./app.css"
 
 export default class App extends Component {
+   idGenerator = () => {
+      return Math.floor(100000 * Math.random())
+   }
+
    state = {
       todos: [
-         {id: 1, description: "Drink coffee", created: "created 17 seconds ago", done: true},
-         {id: 2, description: "Make Awesome App", created: "created 5 minutes ago", done: false},
-         {id: 3, description: "Have a lunch", created: "created yesterday", done: false}
+         this.createTask("Drink coffee"),
+         this.createTask("Make Awesome App"),
+         this.createTask("Have a lunch")
       ]
+   }
+
+   createTask(label) {
+      return {
+         id: this.idGenerator(),
+         label,
+         created: Date.now().toLocaleString(),
+         done: false
+      }
+   }
+
+   addTask = (text) => {
+      const newItem = this.createTask(text)
+
+      this.setState(({todos}) => {
+         const newArr = [
+            ...todos,
+            newItem
+         ]
+
+         return {
+            todos: newArr
+         }
+      })
    }
 
    deleteTask = (id) => {
@@ -46,12 +74,15 @@ export default class App extends Component {
    }
 
    render() {
+      const todoCount = this.state.todos.filter((el) =>
+         !el.done).length
       return (
          <div>
             <section className="todoapp">
                <header className="header">
                   <h1>todos</h1>
-                  <NewTaskForm />
+                  <NewTaskForm
+                  addTask={this.addTask}/>
                </header>
                <section className="main">
                   <TaskList
@@ -59,7 +90,8 @@ export default class App extends Component {
                      onDelete={this.deleteTask}
                      onDone={this.onToggleDone}
                   />
-                  <Footer />
+                  <Footer
+                  todoCount={todoCount}/>
                </section>
             </section>
          </div>

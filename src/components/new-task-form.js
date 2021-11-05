@@ -1,9 +1,23 @@
-import React from "react";
+import React, {Component} from "react";
 
 import "./new-task-form.css"
 
-const NewTaskForm = () => {
-   return <input className="new-todo" placeholder="What needs to be done?" autoFocus />
-}
+export default class NewTaskForm extends Component {
+   state = {
 
-export default NewTaskForm
+   }
+
+   addByEnter = (event) => {
+      if(event.key === "Enter"){
+         return this.props.addTask("test")
+      }
+   }
+
+   render() {
+      return <input
+         className="new-todo"
+         placeholder="What needs to be done?"
+         autoFocus
+         onKeyUp={this.addByEnter}/>
+   }
+}
