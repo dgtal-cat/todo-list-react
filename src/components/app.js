@@ -7,6 +7,8 @@ import Footer from "./footer";
 import "./app.css"
 
 export default class App extends Component {
+
+   //my own little id generator
    idGenerator = () => {
       return Math.floor(100000 * Math.random())
    }
@@ -24,7 +26,9 @@ export default class App extends Component {
          id: this.idGenerator(),
          label,
          created: Date.now(),
-         done: false
+         done: false,
+         editing: false,
+         show: true
       }
    }
 
@@ -45,6 +49,31 @@ export default class App extends Component {
          }
       })
    }
+
+   editTask = (id) => {
+      this.setState(({todos}) => {
+         const newTodos = todos.map((task) => {
+            return task.id === id ? {...task, editing: true} : task
+         })
+         return {
+            todos: newTodos
+         }
+      })
+   }
+
+   saveEditedTask = (id, newLabel) => {
+      this.setState(({todos}) => {
+         const editedTasksList = todos.map((task) => {
+            return task.id === id ? {...task, label: newLabel, editing: false, created: Date.now()} : task
+         })
+         console.log(`Label for Task with id ${id} changed to: ${newLabel}`)
+
+         return {
+            todos: editedTasksList
+         }
+      })
+   }
+
 
    deleteTask = (id) => {
       this.setState(({todos}) => {
@@ -78,6 +107,18 @@ export default class App extends Component {
       })
    }
 
+   clearCompleted = () => {
+      this.setState(({todos}) => {
+         let newTodos = []
+         todos.forEach((el) => {
+            if (!el.done) newTodos.push(el)
+         })
+         return {
+            todos: newTodos
+         }
+      })
+   }
+
    render() {
       const todoCount = this.state.todos.filter((el) =>
          !el.done).length
@@ -94,9 +135,13 @@ export default class App extends Component {
                      todos={this.state.todos}
                      onDelete={this.deleteTask}
                      onDone={this.onToggleDone}
+                     onEditTask={this.editTask}
+                     onSaveTask={this.saveEditedTask}
                   />
                   <Footer
-                  todoCount={todoCount}/>
+                  todoCount={todoCount}
+                  onClearCompleted={this.clearCompleted}
+                  />
                </section>
             </section>
          </div>

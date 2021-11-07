@@ -7,9 +7,9 @@ export default class NewTaskForm extends Component {
       label: ''
    }
 
-   onLabelChange = (element) => {
+   onLabelChange = (e) => {
      this.setState({
-        label: element.target.value
+        label: e.target.value
      })
    }
 

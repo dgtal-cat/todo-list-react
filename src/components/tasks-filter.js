@@ -1,23 +1,31 @@
-import React from "react";
+import React, {Component} from "react";
+
+import FilterButton from "./filter-button";
 
 import "./tasks-filter.css"
 
-const TasksFilter = () => {
-   return (
-   <div>
-      <ul className="filters">
-         <li>
-            <button className="selected">All</button>
-         </li>
-         <li>
-            <button>Active</button>
-         </li>
-         <li>
-            <button>Completed</button>
-         </li>
-      </ul>
-   </div>
-   )
-}
+export default class TasksFilter extends Component{
 
-export default TasksFilter
+   FILTERS_MAP = [
+      'All',
+      'Active',
+      'Completed'
+   ]
+
+   render() {
+      const filters = this.FILTERS_MAP.map((el) => {
+            return (
+               <li key={el}>
+                  <FilterButton name={el}/>
+               </li>
+            )
+         }
+      )
+
+      return (
+         <ul className="filters">
+            {filters}
+         </ul>
+      )
+   }
+}

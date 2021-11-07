@@ -8,6 +8,26 @@
     position: relative;
     font-size: 24px;
     border-bottom: 1px solid #ededed;
+    color: #424242;
+}
+
+.todo-list li div {
+    display: flex;
+}
+
+.todo-list li form {
+    width: 100%;
+}
+
+.todo-list .save-button {
+    margin: 0 14px;
+    color: #cc9a9a;
+    height: fit-content;
+    align-self: center;
+}
+
+.todo-list .save-button:hover {
+    color: #af5b5e;
 }
 
 .todo-list li:last-child {
@@ -72,16 +92,17 @@
 
 .todo-list li label .created {
     font-size: 13px;
-    color: gray;
+    color: #858585;
+    width: 155px;
 }
 
 .todo-list li label .label {
-    word-break: break-all;
+    word-break: break-word;
     display: block;
     line-height: 1.2;
     transition: color 0.4s;
     font-weight: 400;
-    color: #4d4d4d;
+    width: 230px;
 }
 
 .todo-list li.completed label .label {
@@ -92,12 +113,10 @@
 .todo-list li .icon {
     position: absolute;
     top: 0;
-    bottom: -3px;
+    bottom: 0;
     width: 30px;
-    height: 40px;
     font-size: 34px;
     color: #cc9a9a;
-    margin: auto 0 11px;
     transition: color 0.2s ease-out;
     cursor: pointer;
 }
@@ -115,8 +134,8 @@
 }
 
 .todo-list li .icon-edit {
-    font-size: 19px;
     right: 45px;
+    font-size: 18px;
 }
 
 .todo-list li .icon-edit:after {
