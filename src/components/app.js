@@ -18,7 +18,8 @@ export default class App extends Component {
          this.createTask("Drink coffee"),
          this.createTask("Make Awesome App"),
          this.createTask("Have a lunch")
-      ]
+      ],
+      filter: 'All'
    }
 
    createTask(label) {
@@ -77,7 +78,7 @@ export default class App extends Component {
 
    deleteTask = (id) => {
       this.setState(({todos}) => {
-         const index = todos.findIndex((el) => el.id === id)
+         const index = todos.findIndex((task) => task.id === id)
 
          const newTodos = [
             ...todos.slice(0, index),
@@ -94,12 +95,12 @@ export default class App extends Component {
 
    onToggleDone = (id) => {
       this.setState(({todos}) => {
-         const newTodos = todos.map((item) => {
-            if (item.id === id) {
-               item.done = !item.done
-               console.log(`Task with id ${id}: done status is ${item.done}`)
+         const newTodos = todos.map((task) => {
+            if (task.id === id) {
+               task.done = !task.done
+               console.log(`Task with id ${id}: done status is ${task.done}`)
             }
-            return item
+            return task
          })
          return {
             todos: newTodos
@@ -119,9 +120,42 @@ export default class App extends Component {
       })
    }
 
+   setFilter = (filter) => {
+      this.setState(({todos}) => {
+         let newTodo = []
+         // eslint-disable-next-line default-case
+         switch (filter) {
+            case 'All' :
+               newTodo = todos.map((task) => {
+                  task.show = true
+                  return task
+               })
+               console.log('filter: selected All')
+               break
+            case 'Active':
+               newTodo = todos.map((task) => {
+                  task.show = !task.done;
+                  return task
+                  })
+               console.log('filter: selected Active')
+               break
+            case 'Completed':
+               newTodo = todos.map((task) => {
+                  task.show = !!task.done;
+                  return task
+               })
+               console.log('filter: selected Completed')
+               break
+         }
+         return {
+            todos: newTodo,
+            filter: filter
+         }
+      })
+   }
+
    render() {
-      const todoCount = this.state.todos.filter((el) =>
-         !el.done).length
+      const todoCount = this.state.todos.filter((el) => !el.done).length
       return (
          <div>
             <section className="todoapp">
@@ -141,6 +175,8 @@ export default class App extends Component {
                   <Footer
                   todoCount={todoCount}
                   onClearCompleted={this.clearCompleted}
+                  filter={this.state.filter}
+                  setFilter={this.setFilter}
                   />
                </section>
             </section>

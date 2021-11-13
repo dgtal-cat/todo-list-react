@@ -7,13 +7,16 @@ export default class TaskList extends Component {
    render() {
       const {todos, onDelete, onDone, onEditTask, onSaveTask} = this.props;
       const elements = todos.map((item) => {
-         const {id, done, editing, ...taskProps} = item;
+         const {id, done, editing, show, ...taskProps} = item;
          let styleClass = ""
          if (done) {
             styleClass = 'completed'
          } else if (editing) {
             styleClass = 'editing'
          } else styleClass = ''
+
+         if (!show) styleClass += ' hidden'
+
          return (
             <li key={id} className={styleClass}>
                <Task {...taskProps}

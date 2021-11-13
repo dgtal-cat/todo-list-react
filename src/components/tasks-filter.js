@@ -6,17 +6,17 @@ import "./tasks-filter.css"
 
 export default class TasksFilter extends Component{
 
-   FILTERS_MAP = [
-      'All',
-      'Active',
-      'Completed'
-   ]
+   FILTER_MAP = ['All', 'Active', 'Completed']
 
    render() {
-      const filters = this.FILTERS_MAP.map((el) => {
+      const {filter, setFilter} = this.props
+      const filtersList = this.FILTER_MAP.map((name) => {
             return (
-               <li key={el}>
-                  <FilterButton name={el}/>
+               <li key={name}>
+                  <FilterButton
+                     name={name}
+                     filter={filter}
+                     setFilter={(name) => setFilter(name)}/>
                </li>
             )
          }
@@ -24,7 +24,7 @@ export default class TasksFilter extends Component{
 
       return (
          <ul className="filters">
-            {filters}
+            {filtersList}
          </ul>
       )
    }
