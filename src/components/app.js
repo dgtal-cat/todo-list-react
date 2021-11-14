@@ -1,8 +1,8 @@
-import React, {Component} from "react";
+import React, {Component} from "react"
 
-import NewTaskForm from "./new-task-form";
-import TaskList from "./task-list";
-import Footer from "./footer";
+import NewTaskForm from "./new-task-form"
+import TaskList from "./task-list"
+import Footer from "./footer"
 
 import "./app.css"
 
@@ -65,7 +65,9 @@ export default class App extends Component {
    saveEditedTask = (id, newLabel) => {
       this.setState(({todos}) => {
          const editedTasksList = todos.map((task) => {
-            return task.id === id ? {...task, label: newLabel, editing: false, created: Date.now()} : task
+            if (task.id === id) {
+               return {...task, label: newLabel, editing: false, created: Date.now()}
+            } else return task
          })
          console.log(`Label for Task with id ${id} changed to: ${newLabel}`)
 
@@ -173,10 +175,10 @@ export default class App extends Component {
                      onSaveTask={this.saveEditedTask}
                   />
                   <Footer
-                  todoCount={todoCount}
-                  onClearCompleted={this.clearCompleted}
-                  filter={this.state.filter}
-                  setFilter={this.setFilter}
+                     todoCount={todoCount}
+                     onClearCompleted={this.clearCompleted}
+                     filter={this.state.filter}
+                     setFilter={this.setFilter}
                   />
                </section>
             </section>

@@ -1,8 +1,25 @@
-import React, {Component} from "react";
-import Task from "./task";
+import React, {Component} from "react"
+import PropTypes from "prop-types"
+import Task from "./task"
 import "./task-list.css"
 
 export default class TaskList extends Component {
+
+   static defaultProps = {
+      todos: [],
+      onDelete: () => {},
+      onDone: () => {},
+      onEditTask: () => {},
+      onSaveTask: () => {}
+   }
+
+   static propTypes = {
+      todos: PropTypes.arrayOf(PropTypes.object),
+      onDelete: PropTypes.func,
+      onDone: PropTypes.func,
+      onEditTask: PropTypes.func,
+      onSaveTask: PropTypes.func
+   }
 
    render() {
       const {todos, onDelete, onDone, onEditTask, onSaveTask} = this.props;
@@ -19,14 +36,15 @@ export default class TaskList extends Component {
 
          return (
             <li key={id} className={styleClass}>
-               <Task {...taskProps}
-                     id={id}
-                     done={done}
-                     editing={editing}
-                     onDelete={() => onDelete(id)}
-                     onDone={() => onDone(id)}
-                     onEditTask={(id) => onEditTask(id)}
-                     onSaveTask={(id, newLabel) => onSaveTask(id, newLabel)}
+               <Task
+                  {...taskProps}
+                  id={id}
+                  done={done}
+                  editing={editing}
+                  onDelete={() => onDelete(id)}
+                  onDone={() => onDone(id)}
+                  onEditTask={(id) => onEditTask(id)}
+                  onSaveTask={(id, newLabel) => onSaveTask(id, newLabel)}
                />
             </li>
          )

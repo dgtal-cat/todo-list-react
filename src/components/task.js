@@ -1,9 +1,33 @@
-import React, {Component} from "react";
+import React, {Component} from "react"
+import PropTypes from "prop-types"
 import { formatDistanceToNow } from 'date-fns'
 
 import "./task.css"
 
 export default class Task extends Component {
+
+   static defaultProps = {
+      id: null,
+      label: 'empty',
+      created: Date.now(),
+      done: false,
+      onDelete: () => {},
+      onDone: () => {},
+      onEditTask: () => {},
+      onSaveTask: () => {}
+   }
+
+   static propTypes = {
+      id: PropTypes.number.isRequired,
+      label: PropTypes.string.isRequired,
+      created: PropTypes.number,
+      done: PropTypes.bool,
+      onDelete: PropTypes.func,
+      onDone: PropTypes.func,
+      onEditTask: PropTypes.func,
+      onSaveTask: PropTypes.func
+   }
+
    state = {
       isEditing: false,
       newLabel: ''
