@@ -43,8 +43,8 @@ export default class TaskList extends Component {
                   editing={editing}
                   onDelete={() => onDelete(id)}
                   onDone={() => onDone(id)}
-                  onEditTask={(id) => onEditTask(id)}
-                  onSaveTask={(id, newLabel) => onSaveTask(id, newLabel)}
+                  onEditTask={(taskId) => onEditTask(taskId)}
+                  onSaveTask={(taskId, newLabel) => onSaveTask(taskId, newLabel)}
                />
             </li>
          )

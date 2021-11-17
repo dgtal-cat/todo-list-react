@@ -16,14 +16,14 @@ export default class NewTaskForm extends Component {
       addTask: PropTypes.func
    }
 
-   onLabelChange = (e) => {
+   onLabelChange = (event) => {
      this.setState({
-        label: e.target.value
+        label: event.target.value
      })
    }
 
-   onSubmit = (e) => {
-      e.preventDefault()
+   onSubmit = (event) => {
+      event.preventDefault()
       this.props.addTask(this.state.label)
       this.setState({
          label: ''

@@ -5,6 +5,7 @@ import "./footer.css"
 
 import TasksFilter from "./tasks-filter"
 
+// eslint-disable-next-line react/prefer-stateless-function
 export default class Footer extends Component {
 
    static defaultProps = {
@@ -31,7 +32,7 @@ export default class Footer extends Component {
                filter={filter}
                setFilter={(name) => setFilter(name)}
             />
-            <button
+            <button type="button"
                className="clear-completed"
                onClick={onClearCompleted}>Clear completed</button>
          </footer>

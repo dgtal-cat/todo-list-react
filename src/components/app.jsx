@@ -8,13 +8,11 @@ import "./app.css"
 
 export default class App extends Component {
 
-   //my own little id generator
-   idGenerator = () => {
-      return Math.floor(100000 * Math.random())
-   }
-
    state = {
       todos: [
+         this.createTask("Wakeup!"),
+         this.createTask("Have a breakfast"),
+         this.createTask("Watch YouTube"),
          this.createTask("Drink coffee"),
          this.createTask("Make Awesome App"),
          this.createTask("Have a lunch")
@@ -22,22 +20,8 @@ export default class App extends Component {
       filter: 'All'
    }
 
-   createTask(label) {
-      return {
-         id: this.idGenerator(),
-         label,
-         created: Date.now(),
-         done: false,
-         editing: false,
-         show: true
-      }
-   }
-
    addTask = (text) => {
       const newItem = this.createTask(text)
-
-      console.log("New task created:")
-      console.log(newItem)
 
       this.setState(({todos}) => {
          const newArr = [
@@ -53,9 +37,7 @@ export default class App extends Component {
 
    editTask = (id) => {
       this.setState(({todos}) => {
-         const newTodos = todos.map((task) => {
-            return task.id === id ? {...task, editing: true} : task
-         })
+         const newTodos = todos.map((task) => task.id === id ? {...task, editing: true} : task)
          return {
             todos: newTodos
          }
@@ -67,9 +49,9 @@ export default class App extends Component {
          const editedTasksList = todos.map((task) => {
             if (task.id === id) {
                return {...task, label: newLabel, editing: false, created: Date.now()}
-            } else return task
+            }
+            return task
          })
-         console.log(`Label for Task with id ${id} changed to: ${newLabel}`)
 
          return {
             todos: editedTasksList
@@ -87,8 +69,6 @@ export default class App extends Component {
             ...todos.slice(index + 1)
          ]
 
-         console.log(`Task with id ${id} was deleted`)
-
          return {
             todos: newTodos
          }
@@ -99,8 +79,8 @@ export default class App extends Component {
       this.setState(({todos}) => {
          const newTodos = todos.map((task) => {
             if (task.id === id) {
+               // eslint-disable-next-line no-param-reassign
                task.done = !task.done
-               console.log(`Task with id ${id}: done status is ${task.done}`)
             }
             return task
          })
@@ -112,7 +92,7 @@ export default class App extends Component {
 
    clearCompleted = () => {
       this.setState(({todos}) => {
-         let newTodos = []
+         const newTodos = []
          todos.forEach((el) => {
             if (!el.done) newTodos.push(el)
          })
@@ -132,28 +112,36 @@ export default class App extends Component {
                   task.show = true
                   return task
                })
-               console.log('filter: selected All')
                break
             case 'Active':
                newTodo = todos.map((task) => {
                   task.show = !task.done;
                   return task
                   })
-               console.log('filter: selected Active')
                break
             case 'Completed':
                newTodo = todos.map((task) => {
                   task.show = !!task.done;
                   return task
                })
-               console.log('filter: selected Completed')
                break
          }
          return {
             todos: newTodo,
-            filter: filter
+            filter
          }
       })
+   }
+
+   createTask (label) {
+      return {
+         id: Math.floor(100000 * Math.random()),
+         label,
+         created: Date.now(),
+         done: false,
+         editing: false,
+         show: true
+      }
    }
 
    render() {

@@ -21,17 +21,15 @@ export default class TasksFilter extends Component{
 
    render() {
       const {filter, setFilter} = this.props
-      const filtersList = this.FILTER_MAP.map((name) => {
-            return (
-               <li key={name}>
-                  <FilterButton
-                     name={name}
-                     filter={filter}
-                     setFilter={(name) => setFilter(name)}
-                  />
-               </li>
-            )
-         }
+      const filtersList = this.FILTER_MAP.map((name) => (
+            <li key={name}>
+               <FilterButton
+                  name={name}
+                  filter={filter}
+                  setFilter={(filterName) => setFilter(filterName)}
+               />
+            </li>
+         )
       )
 
       return (

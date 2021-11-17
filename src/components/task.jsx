@@ -7,8 +7,6 @@ import "./task.css"
 export default class Task extends Component {
 
    static defaultProps = {
-      id: null,
-      label: 'empty',
       created: Date.now(),
       done: false,
       onDelete: () => {},
@@ -33,9 +31,9 @@ export default class Task extends Component {
       newLabel: ''
    }
 
-   setNewLabel = (e) => {
+   setNewLabel = (event) => {
       this.setState({
-         newLabel: e.target.value
+         newLabel: event.target.value
       })
    }
 
@@ -46,27 +44,21 @@ export default class Task extends Component {
       const edit = () => {
          onEditTask(id)
 
-         this.setState(() => {
-            return {
+         this.setState(() => ({
                isEditing: true,
                newLabel: label
-            }
-         })
+            }))
 
          if (done) {
             onDone(id)
          }
       }
 
-      const save = (e) => {
-         e.preventDefault()
+      const save = (event) => {
+         event.preventDefault()
          onSaveTask(id, this.state.newLabel)
 
-         this.setState(() => {
-            return {
-               isEditing: false
-            }
-         })
+         this.setState(() => ({ isEditing: false }))
       }
 
       const viewTemplate = (
@@ -81,8 +73,10 @@ export default class Task extends Component {
                <span className="label">{label}</span>
                <span className="created">{wasCreatedText}</span>
             </label>
-            <button className="icon icon-edit" onClick={edit}/>
-            <button className="icon icon-destroy" onClick={onDelete}/>
+            {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+            <button type="button" className="icon icon-edit" onClick={edit}/>
+            {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+            <button type="button" className="icon icon-destroy" onClick={onDelete}/>
          </div>
       )
 
@@ -98,7 +92,7 @@ export default class Task extends Component {
                   onChange={this.setNewLabel}
                />
             </form>
-            <button className={'save-button'} onClick={save}>Save</button>
+            <button type="button" className="save-button" onClick={save}>Save</button>
          </div>
       )
 

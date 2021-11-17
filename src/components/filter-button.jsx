@@ -15,14 +15,13 @@ export default class FilterButton extends Component {
       setFilter: PropTypes.func
    }
 
-   isSelected = (name) => {
-      return this.props.filter === name ? 'selected' : ''
-   }
+   isSelected = (name) => this.props.filter === name ? 'selected' : ''
 
    render() {
       const {name, setFilter} = this.props
+
       return (
-         <button
+         <button type="button"
             className={this.isSelected(name)}
             onClick={() => setFilter(name)}
          >{name}</button>
